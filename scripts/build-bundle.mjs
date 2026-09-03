@@ -60,10 +60,10 @@ try {
 }
 if (bundleChanged) {
   git(["commit", "-m", "Build generated bundle"], bundle);
-  if (push) git(["push", "origin", "HEAD:bundle"], bundle);
 } else {
   console.log("bundle: unchanged");
 }
+if (push) git(["push", "origin", "HEAD:bundle"], bundle);
 
 git(["add", "bundle"]);
 let superprojectChanged = true;
