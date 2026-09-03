@@ -5,10 +5,7 @@ const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 const port = Number.parseInt(process.env.PORT || "3000", 10);
 const publicDir = process.env.PUBLIC_DIR ? resolve(process.env.PUBLIC_DIR) : null;
 const configuredBaseUrl = process.env.BASE_URL
-  || (process.env.RAILWAY_PUBLIC_DOMAIN
-    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
-    : `http://localhost:${port}`);
-const baseUrl = configuredBaseUrl.replace(/\/+$/, "");
+  || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : null);
 
 function headers(contentType) {
   return {
@@ -96,7 +93,8 @@ const server = Bun.serve({
         hits: 0,
         createdAt: new Date().toISOString(),
       };
-      link.shortUrl = `${baseUrl}/${link.code}`;
+      const requestBaseUrl = configuredBaseUrl || new URL(request.url).origin;
+      link.shortUrl = `${requestBaseUrl.replace(/\/+$/, "")}/${link.code}`;
       links.set(link.code, link);
       return json(link, 201);
     }
