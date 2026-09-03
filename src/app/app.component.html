@@ -1,11 +1,12 @@
+<div class="hero-glow" aria-hidden="true"></div>
 <main>
   <section class="hero">
-    <p class="eyebrow">SNIP URL SHORTENER</p>
-    <h1>Short links.<br /><span>Simple sharing.</span></h1>
+    <p class="eyebrow">SNIP / URL SHORTENER</p>
+    <h1>Share less.<br /><span>Say more.</span></h1>
     <p class="intro">Turn long URLs into clean, memorable links in seconds.</p>
 
     <form (ngSubmit)="submit()" #linkForm="ngForm">
-      <label for="url">Paste a URL to shorten</label>
+      <label for="url">What would you like to shorten?</label>
       <div class="input-row">
         <input
           id="url"
@@ -17,7 +18,7 @@
           required
         />
         <button type="submit" [disabled]="loading() || !linkForm.valid">
-          {{ loading() ? 'Shortening...' : 'Shorten' }}
+          {{ loading() ? 'Working...' : 'Create link' }}
         </button>
       </div>
     </form>
