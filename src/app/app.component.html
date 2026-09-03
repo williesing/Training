@@ -1,0 +1,62 @@
+<main>
+  <section class="hero">
+    <p class="eyebrow">SNIP URL SHORTENER</p>
+    <h1>Short links.<br /><span>Simple sharing.</span></h1>
+    <p class="intro">Turn long URLs into clean, memorable links in seconds.</p>
+
+    <form (ngSubmit)="submit()" #linkForm="ngForm">
+      <label for="url">Paste a URL to shorten</label>
+      <div class="input-row">
+        <input
+          id="url"
+          name="url"
+          type="url"
+          [(ngModel)]="url"
+          placeholder="https://example.com/your-long-link"
+          autocomplete="url"
+          required
+        />
+        <button type="submit" [disabled]="loading() || !linkForm.valid">
+          {{ loading() ? 'Shortening...' : 'Shorten' }}
+        </button>
+      </div>
+    </form>
+
+    @if (createdLink(); as link) {
+      <div class="notice success">
+        Your short link:
+        <a [href]="link.shortUrl" target="_blank" rel="noopener">{{ link.shortUrl }}</a>
+      </div>
+    }
+    @if (error()) {
+      <div class="notice error">{{ error() }}</div>
+    }
+  </section>
+
+  <section class="links-card">
+    <div class="card-heading">
+      <h2>Your links</h2>
+      <span>{{ links().length }} total</span>
+    </div>
+    @if (links().length) {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Short code</th><th>Original URL</th><th>Hits</th></tr>
+          </thead>
+          <tbody>
+            @for (link of links(); track link.code) {
+              <tr>
+                <td><a [href]="link.shortUrl" target="_blank" rel="noopener">{{ link.code }}</a></td>
+                <td class="original-url" [title]="link.url">{{ link.url }}</td>
+                <td>{{ link.hits }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <p class="empty">No links yet. Create your first one above.</p>
+    }
+  </section>
+</main>
