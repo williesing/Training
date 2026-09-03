@@ -72,3 +72,16 @@ git push
 
 Use the same workflow for `frontend` or `cli`. The superproject stores a
 pointer to a specific commit on each layer branch.
+
+## Generated bundle
+
+Build the release submodule from the latest backend, frontend, and CLI branch
+tips:
+
+```sh
+node scripts/build-bundle.mjs
+node scripts/build-bundle.mjs --push
+```
+
+The generated `bundle/` submodule serves the UI and API from one Bun process.
+Do not hand-edit its contents.
